@@ -16,11 +16,11 @@ from sklearn.model_selection import train_test_split
 # from sklearn.metrics import confusion_matrix
 import pickle
 
-img_height = 256
-img_width = 256
+img_height = 32
+img_width = 32
 
-img_height_test = 256
-img_width_test = 256
+img_height_test = 32
+img_width_test = 32
 
 speckle_data = load('speckle_array_case0.npy')
 print(speckle_data.shape)
