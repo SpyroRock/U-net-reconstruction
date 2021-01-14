@@ -12,9 +12,9 @@ print(features_symbol.shape)
 features_symbol_predicted = load('features_predicted.npy')
 print(features_symbol_predicted.shape)
 
-plt.imshow(features_symbol[8, :, :, 0], cmap='gray')
+plt.imshow(features_symbol[0, :, :, 0], cmap='gray')
 plt.show()
-plt.imshow(features_symbol_predicted[8, :, :, 0], cmap='gray')
+plt.imshow(features_symbol_predicted[0, :, :, 0], cmap='gray')
 plt.show()
 
 reconstruction = load_model('reconstruction_model')
