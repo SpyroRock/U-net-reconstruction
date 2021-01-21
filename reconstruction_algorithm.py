@@ -1,4 +1,5 @@
 from model_structure import create_model
+from U_net_model import build_model
 import keras
 from keras.models import Model
 from keras.layers import Input
@@ -42,6 +43,9 @@ input_shape = (img_height, img_width, 1)
 y_train = y_train.reshape(-1, img_height_test, img_width_test, 1)
 y_test = y_test.reshape(-1, img_height_test, img_width_test, 1)
 input_shape_test = (img_height_test, img_width_test, 1)
+
+#input_layer = Input((img_height, img_width, 1))
+#reconstruction = build_model(input_layer, 16)
 
 reconstruction = create_model(pretrained_weights = None, input_size = input_shape, start_neurons = 64)
 print(reconstruction)
