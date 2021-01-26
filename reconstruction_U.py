@@ -30,15 +30,15 @@ img_width_test = 128
 speckle_data = load('speckle_array_case1.npy')
 print(speckle_data.shape)
 
-# plt.imshow(speckle_data[0], cmap='gray')
-# plt.show()
+plt.imshow(speckle_data[0], cmap='gray')
+plt.show()
 
 # speckle_labels = load('speckle_labels.npy')
 speckle_labels = load('symbol_array_case1.npy')
 print(speckle_labels.shape)
 
-# plt.imshow(speckle_labels[0], cmap='gray')
-# plt.show()
+plt.imshow(speckle_labels[0], cmap='gray')
+plt.show()
 
 # dictionary = {speckle_labels_n: speckle_labels_mn_n for speckle_labels_n, speckle_labels_mn_n in zip(speckle_labels, speckle_labels_mn)}
 
