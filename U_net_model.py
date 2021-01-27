@@ -37,7 +37,7 @@ def build_model(input_layer, start_neurons):
     convm = Conv2D(start_neurons * 16, (3, 3), activation="relu", padding="same")(convm)
     pool5 = Dropout(0.25)(convm)
 
-    deconv4 = Conv2DTranspose(start_neurons * 8, (3, 3), strides=(2, 2), padding="same")(convm)
+    deconv4 = Conv2DTranspose(start_neurons * 8, (3, 3), strides=(2, 2), padding="same")(pool5)
     uconv4 = concatenate([deconv4, conv4])
     #uconv4 = Dropout(0.5)(uconv4)
     uconv4 = Conv2D(start_neurons * 8, (3, 3), activation="relu", padding="same")(uconv4)
