@@ -30,20 +30,12 @@ def build_model(input_layer, start_neurons):
     conv4 = Conv2D(start_neurons * 8, (3, 3), activation="relu", padding="same")(pool3)
     conv4 = Conv2D(start_neurons * 8, (3, 3), activation="relu", padding="same")(conv4)
     pool4 = MaxPooling2D((2, 2))(conv4)
-<<<<<<< HEAD
     pool4 = Dropout(0.5)(pool4)
-=======
-    pool4 = Dropout(0.25)(pool4)
->>>>>>> 0d142fc88b6679c8be1a5ee7da8476106b7ca139
 
     # Middle
     convm = Conv2D(start_neurons * 16, (3, 3), activation="relu", padding="same")(pool4)
     convm = Conv2D(start_neurons * 16, (3, 3), activation="relu", padding="same")(convm)
-<<<<<<< HEAD
-    pool5 = Dropout(0.5)(convm)
-=======
-    pool5 = Dropout(0.25)(convm)
->>>>>>> 0d142fc88b6679c8be1a5ee7da8476106b7ca139
+    pool5 = Dropout((2, 2))(convm)
 
     deconv4 = Conv2DTranspose(start_neurons * 8, (3, 3), strides=(2, 2), padding="same")(pool5)
     uconv4 = concatenate([deconv4, conv4])
