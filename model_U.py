@@ -20,19 +20,19 @@ def create_model_U(pretrained_weights = None, input_size = (256,256,1), start_ne
     # drop1 = Dropout(0.5)(pool1)
 
     #Second Conv layer (Concatenate third) 256 
-    conv2 = Conv2D(start_neurons * 2, 3, activation = 'relu', padding = 'same')(drop1)                           #conv3 -> 256
+    conv2 = Conv2D(start_neurons * 2, 3, activation = 'relu', padding = 'same')(pool1)                           #conv3 -> 256
     conv2 = Conv2D(start_neurons * 2, 3, activation = 'relu', padding = 'same')(conv2)                           #conv4 -> 256
     pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)                                                                #pool2 -> 128
     # drop2 = Dropout(0.5)(pool2)
 
     #Third Conv layer (Concatenate second) 128 
-    conv3 = Conv2D(start_neurons * 4, 3, activation = 'relu', padding = 'same')(drop2)                           #conv5 -> 128
+    conv3 = Conv2D(start_neurons * 4, 3, activation = 'relu', padding = 'same')(pool2)                           #conv5 -> 128
     conv3 = Conv2D(start_neurons * 4, 3, activation = 'relu', padding = 'same')(conv3)                           #conv6 -> 128
     pool3 = MaxPooling2D(pool_size=(2, 2))(conv3)                                                                #pool3 -> 64
     # drop3 = Dropout(0.5)(pool3)
 
     #Fourth Cinv Layer (Concatenate first) 64 
-    conv4 = Conv2D(start_neurons * 8, 3, activation = 'relu', padding = 'same')(drop3)                           #conv7 -> 64
+    conv4 = Conv2D(start_neurons * 8, 3, activation = 'relu', padding = 'same')(pool3)                           #conv7 -> 64
     conv4 = Conv2D(start_neurons * 8, 3, activation = 'relu', padding = 'same')(conv4)                           #conv8 -> 64                       
     pool4 = MaxPool2D(pool_size=(2,2))(conv4)                                                                    #pool4 -> 32
     drop4 = Dropout(0.5)(pool4)
