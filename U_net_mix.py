@@ -12,7 +12,7 @@ def unet_model(n_classes=1, im_sz=160, n_channels=1, n_filters_start=32, growth_
     droprate=0.25
     n_filters = n_filters_start
     
-    inputs = Input((im_sz, im_sz, n_channels))
+    inputs = Input(im_sz, im_sz, n_channels)
     inputs = BatchNormalization()(inputs)
     
     conv1 = Conv2D(n_filters, (3, 3), activation='relu', padding='same')(inputs)
