@@ -111,5 +111,6 @@ def unet_model(n_classes=1, im_size=32, n_channels=1, n_filters_start=32, growth
     # model.compile(optimizer=Adam(), loss=weighted_binary_crossentropy)
 
     model.compile(optimizer = Adam(), loss = 'binary_crossentropy', metrics = ['accuracy'])
+    model.summary()
     
     return model
