@@ -1,4 +1,5 @@
 from model_structure import create_model
+from U_net_mix import unet_model
 from U_net_model import build_model
 import keras
 from keras.models import Model
@@ -19,11 +20,11 @@ from sklearn.model_selection import train_test_split
 # from sklearn.metrics import confusion_matrix
 import pickle
 
-img_height = 64
-img_width = 64
+img_height = 32
+img_width = 32
 
-img_height_test = 64
-img_width_test = 64
+img_height_test = 32
+img_width_test = 32
 
 speckle_data = load('speckle_array_case0.npy')
 print(speckle_data.shape)
@@ -47,8 +48,14 @@ input_shape_test = (img_height_test, img_width_test, 1)
 #input_layer = Input((img_height, img_width, 1))
 #reconstruction = build_model(input_layer, 16)
 
-reconstruction = create_model(pretrained_weights = None, input_size = input_shape, start_neurons = 64)
-print(reconstruction)
+# reconstruction = create_model(pretrained_weights = None, input_size = input_shape, start_neurons = 64)
+reconstruction = unet_model(n_classes=1, 
+                            im_size=32, 
+                            n_channels=1, 
+                            n_filters_start=32, 
+                            growth_factor=2, 
+                            upconv=True)
+#print(reconstruction)
 
 reconstruction.fit(X_train, y_train, 
                    batch_size = 50, 
