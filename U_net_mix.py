@@ -100,9 +100,11 @@ def unet_model(n_classes=1, im_size=32, n_channels=1, n_filters_start=32, growth
     conv9 = Conv2D(n_filters, (3, 3), activation='relu', padding='same')(up9)
     conv9 = Conv2D(n_filters, (3, 3), activation='relu', padding='same')(conv9)
 
-    conv10 = Conv2D(n_classes, (1, 1), activation='sigmoid')(conv9)
+    conv10 = Conv2D(2, (3,3), activation='relu', padding='same')(conv9)
 
-    model = Model(inputs = inputs, outputs = conv10)
+    conv11 = Conv2D(n_classes, (1, 1), activation='sigmoid')(conv10)
+
+    model = Model(inputs = inputs, outputs = conv11)
 
     # def weighted_binary_crossentropy(y_true, y_pred):
     #     class_loglosses = K.mean(K.binary_crossentropy(y_true, y_pred), axis=[0, 1, 2])

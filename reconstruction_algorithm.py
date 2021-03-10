@@ -1,5 +1,6 @@
 from model_structure import create_model
 from U_net_mix import unet_model
+from unet_model_construction import get_unet
 from U_net_model import build_model
 import keras
 from keras.models import Model
@@ -20,14 +21,17 @@ from sklearn.model_selection import train_test_split
 # from sklearn.metrics import confusion_matrix
 import pickle
 
-img_height = 32
-img_width = 32
+img_height = 128
+img_width = 128
 
-img_height_test = 32
-img_width_test = 32
+img_height_test = 128
+img_width_test = 128
 
 speckle_data = load('speckle_array_case0.npy')
 print(speckle_data.shape)
+#img = cv2.imread('resized.jpg')
+#img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#img = img.reshape((img.shape[0],img.shape[1],1))
 #speckle_labels = load('speckle_labels.npy')
 speckle_labels = load('symbol_array_case0.npy')
 print(speckle_labels.shape)
@@ -35,7 +39,12 @@ print(speckle_labels.shape)
 #plt.show()
 #dictionary = {speckle_labels_n: speckle_labels_mn_n for speckle_labels_n, speckle_labels_mn_n in zip(speckle_labels, speckle_labels_mn)}
 
-X_train, X_test, y_train, y_test = train_test_split(speckle_data, speckle_labels, test_size=0.1, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(speckle_labels, speckle_data, test_size=0.1, random_state=42)
+
+# plt.imshow(X_train[0], cmap='gray')
+# plt.show()
+# plt.imshow(y_train[0], cmap='gray')
+# plt.show()
 
 X_train = X_train.reshape(-1, img_height, img_width, 1)
 X_test = X_test.reshape(-1, img_height, img_width, 1)
@@ -45,21 +54,27 @@ y_train = y_train.reshape(-1, img_height_test, img_width_test, 1)
 y_test = y_test.reshape(-1, img_height_test, img_width_test, 1)
 input_shape_test = (img_height_test, img_width_test, 1)
 
-#input_layer = Input((img_height, img_width, 1))
-#reconstruction = build_model(input_layer, 16)
+# input_layer = Input((img_height, img_width, 1))
+# reconstruction = build_model(input_layer, 16)
 
 # reconstruction = create_model(pretrained_weights = None, input_size = input_shape, start_neurons = 64)
-reconstruction = unet_model(n_classes=1, 
-                            im_size=32, 
-                            n_channels=1, 
-                            n_filters_start=32, 
-                            growth_factor=2, 
-                            upconv=True)
-#print(reconstruction)
+
+# reconstruction = unet_model(n_classes=1, 
+#                             im_size=32, 
+#                             n_channels=1, 
+#                             n_filters_start=32, 
+#                             growth_factor=2, 
+#                             upconv=True)
+# print(reconstruction)
+config = tf.ConfigProto()
+config.gpu_options.allow_growth=True
+sess = tf.Session(config=config)
+
+reconstruction = get_unet(input_shape, n_filters = 16, dropout = 0.1, batchnorm = True)
 
 reconstruction.fit(X_train, y_train, 
-                   batch_size = 50, 
-                   epochs = 100, 
+                   batch_size = 10, 
+                   epochs = 15000, 
                    verbose = 1, 
                    validation_data = (X_test, y_test)) # Data on which to evaluate the loss and any model metrics at the end of each epoch. 
                                                        # The model will not be trained on this data. 
